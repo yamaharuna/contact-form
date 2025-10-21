@@ -20,7 +20,7 @@ export default function ConfirmPage({ formData, onBack, onSubmit }) {
       <div className="button-container">
         <button
           type="button"
-          className="submit-button"
+          className="back-button"
           onClick={onBack}
         >
           入力画面に戻る

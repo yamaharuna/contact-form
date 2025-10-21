@@ -74,3 +74,33 @@
   text-align: center;
   margin-top: 20px;
 }
+
+.thankyou-page {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.thankyou-page h2 {
+  font-size: 1.8rem;
+  margin-bottom: 16px;
+  
+}
+
+.thankyou-page p {
+  color: #555;
+  margin-bottom: 40px;
+}
+
+.back-button {
+  padding: 10px 80px;
+  color: #333;
+  background-color: #ccc;
+  border: 1px solid #fff;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background-color: #b3b3b3;
+}
+
