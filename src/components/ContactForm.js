@@ -7,17 +7,28 @@ export default function ContactForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    service: "",
+    service: "サービスA",
     category: "",
     plan: [],
     message: "",
   });
 
-  const [page, setPage] = useState("form"); // "form" → "confirm" → "success"
+  const [page, setPage] = useState("form");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+
+    // サービスが変わったらカテゴリー・プランをリセット
+    if (name === "service") {
+      setFormData({
+        ...formData,
+        service: value,
+        category: "",
+        plan: [],
+      });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleCheckboxChange = (e) => {
@@ -34,7 +45,6 @@ export default function ContactForm() {
   const handleBack = () => setPage("form");
   const handleSubmit = () => setPage("success");
 
-  // フォームをリセットして最初に戻す
   const handleResetAndReturn = () => {
     setFormData({
       name: "",
@@ -46,6 +56,47 @@ export default function ContactForm() {
     });
     setPage("form");
   };
+
+  // サービスに応じたカテゴリー・プラン
+  const categoryOptions = {
+    サービスA: [
+      { value: "カテゴリー1", label: "カテゴリー1" },
+      { value: "カテゴリー2", label: "カテゴリー2" },
+      { value: "カテゴリー3", label: "カテゴリー3" },
+    ],
+    サービスB: [
+      { value: "カテゴリー4", label: "カテゴリー4" },
+      { value: "カテゴリー5", label: "カテゴリー5" },
+      { value: "カテゴリー6", label: "カテゴリー6" },
+    ],
+    サービスC: [
+      { value: "カテゴリー7", label: "カテゴリー7" },
+      { value: "カテゴリー8", label: "カテゴリー8" },
+      { value: "カテゴリー9", label: "カテゴリー9" },
+    ],
+  };
+
+  const planOptions = {
+    サービスA: [
+      { value: "プランa", label: "プランa" },
+      { value: "プランb", label: "プランb" },
+      { value: "プランc", label: "プランc" },
+    ],
+    サービスB: [
+      { value: "プランd", label: "プランd" },
+      { value: "プランe", label: "プランe" },
+      { value: "プランf", label: "プランf" },
+    ],
+    サービスC: [
+      { value: "プランg", label: "プランg" },
+      { value: "プランh", label: "プランh" },
+      { value: "プランi", label: "プランi" },
+    ],
+  };
+
+  // 現在のサービスに対応する選択肢
+  const currentCategories = categoryOptions[formData.service] || [];
+  const currentPlans = planOptions[formData.service] || [];
 
   if (page === "confirm") {
     return (
@@ -109,89 +160,57 @@ export default function ContactForm() {
               required
               className="form-input"
             >
-              <option value="">選択してください</option>
-              <option value="website">サービスA</option>
-              <option value="app">サービスB</option>
-              <option value="design">サービスC</option>
+
+              <option value="サービスA">サービスA</option>
+              <option value="サービスB">サービスB</option>
+              <option value="サービスC">サービスC</option>
             </select>
           </div>
 
           {/* カテゴリー */}
-          <div className="form-row">
-            <label className="form-label">
-              カテゴリー<span className="required">必須</span>
-            </label>
-            <div className="form-options">
-              <label>
-                <input
-                  type="radio"
-                  name="category"
-                  value="design"
-                  checked={formData.category === "design"}
-                  onChange={handleChange}
-                  required
-                />
-                カテゴリー1
+          {currentCategories.length > 0 && (
+            <div className="form-row">
+              <label className="form-label">
+                カテゴリー<span className="required">必須</span>
               </label>
-              <label>
-                <input
-                  type="radio"
-                  name="category"
-                  value="development"
-                  checked={formData.category === "development"}
-                  onChange={handleChange}
-                />
-                カテゴリー2
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="category"
-                  value="marketing"
-                  checked={formData.category === "marketing"}
-                  onChange={handleChange}
-                />
-                カテゴリー3
-              </label>
+              <div className="form-options">
+                {currentCategories.map((cat) => (
+                  <label key={cat.value}>
+                    <input
+                      type="radio"
+                      name="category"
+                      value={cat.value}
+                      checked={formData.category === cat.value}
+                      onChange={handleChange}
+                      required
+                    />
+                    {cat.label}
+                  </label>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* プラン */}
-          <div className="form-row">
-            <label className="form-label">プラン</label>
-            <div className="form-options">
-              <label>
-                <input
-                  type="checkbox"
-                  name="plan"
-                  value="basic"
-                  checked={formData.plan.includes("basic")}
-                  onChange={handleCheckboxChange}
-                />
-                プランa
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  name="plan"
-                  value="standard"
-                  checked={formData.plan.includes("standard")}
-                  onChange={handleCheckboxChange}
-                />
-                プランb
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  name="plan"
-                  value="premium"
-                  checked={formData.plan.includes("premium")}
-                  onChange={handleCheckboxChange}
-                />
-                プランc
-              </label>
+          {currentPlans.length > 0 && (
+            <div className="form-row">
+              <label className="form-label">プラン</label>
+              <div className="form-options">
+                {currentPlans.map((plan) => (
+                  <label key={plan.value}>
+                    <input
+                      type="checkbox"
+                      name="plan"
+                      value={plan.value}
+                      checked={formData.plan.includes(plan.value)}
+                      onChange={handleCheckboxChange}
+                    />
+                    {plan.label}
+                  </label>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* お問い合わせ内容 */}
           <div className="form-row">
@@ -211,12 +230,13 @@ export default function ContactForm() {
         </form>
       </div>
 
-      {/* ボタン（枠の外） */}
+      {/* ボタン */}
       <div className="button-container">
         <button
           type="button"
           className="submit-button"
           onClick={handleConfirm}
+          disabled={!formData.service}
         >
           確認画面に進む
         </button>
