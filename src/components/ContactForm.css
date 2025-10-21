@@ -1,0 +1,61 @@
+.form-container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.form-row {
+  display: flex;
+  align-items: flex-start; /* 上揃え */
+  margin-bottom: 16px;
+}
+
+.form-label {
+  width: 200px; /* ラベルの固定幅 */
+  font-weight: bold;
+}
+
+.form-input {
+  flex: 1;           /* 残り幅を使う */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-options {
+  flex: 1;               /* ラベルの右側に揃える */
+  display: flex;
+  flex-direction: column; /* 縦並び */
+}
+
+.form-options label {
+  margin-bottom: 8px;    /* ラベル間のスペース */
+}
+
+.submit-button {
+  padding: 10px 20px;
+  background-color: #0099ff; /* GMO薄青 */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #007acc;
+}
+
+.required {
+  display: inline-block;   /* インライン表示 */
+  background-color: red;   /* 赤四角 */
+  color: white;            /* 白文字 */
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 4px;        /* 小さめパディングで文字の横に */
+  margin-left: 4px;        
+  border-radius: 2px;
+  vertical-align: middle;  /* ラベル文字と縦位置揃え */
+}

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./ContactForm.css"; // CSSを読み込む
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -6,7 +7,7 @@ export default function ContactForm() {
     email: "",
     service: "",
     category: "",
-    plan: [], // チェックボックス用に配列に変更
+    plan: [],
     message: "",
   });
 
@@ -43,43 +44,49 @@ export default function ContactForm() {
   };
 
   return (
-    <div style={{ maxWidth: "500px", margin: "40px auto" }}>
+    <div className="form-container">
       <form onSubmit={handleSubmit}>
         {/* 氏名 */}
-        <div style={{ marginBottom: "12px" }}>
-          <label>氏名</label><br />
+        <div className="form-row">
+         <label className="form-label">
+  氏名<span className="required">必須</span>
+</label>
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
             required
-            style={{ width: "100%", padding: "8px" }}
+            className="form-input"
           />
         </div>
 
         {/* メールアドレス */}
-        <div style={{ marginBottom: "12px" }}>
-          <label>メールアドレス</label><br />
+        <div className="form-row">
+         <label className="form-label">
+  メールアドレス<span className="required">必須</span>
+</label>
           <input
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
             required
-            style={{ width: "100%", padding: "8px" }}
+            className="form-input"
           />
         </div>
 
         {/* サービス選択 */}
-        <div style={{ marginBottom: "12px" }}>
-          <label>サービス</label><br />
+        <div className="form-row">
+         <label className="form-label">
+  サービス<span className="required">必須</span>
+</label>
           <select
             name="service"
             value={formData.service}
             onChange={handleChange}
             required
-            style={{ width: "100%", padding: "8px" }}
+            className="form-input"
           >
             <option value="">選択してください</option>
             <option value="website">サービスA</option>
@@ -88,92 +95,98 @@ export default function ContactForm() {
           </select>
         </div>
 
-        {/* カテゴリー選択（ラジオボタン） */}
-<div style={{ marginBottom: "12px" }}>
-  <label>カテゴリー</label><br />
-  <label>
-    <input
-      type="radio"
-      name="category"
-      value="design"
-      checked={formData.category === "design"}
-      onChange={handleChange}
-      required
-    />{" "}
-    カテゴリー1
-  </label>{" "}
-  <label>
-    <input
-      type="radio"
-      name="category"
-      value="development"
-      checked={formData.category === "development"}
-      onChange={handleChange}
-    />{" "}
-    カテゴリー2
-  </label>{" "}
-  <label>
-    <input
-      type="radio"
-      name="category"
-      value="marketing"
-      checked={formData.category === "marketing"}
-      onChange={handleChange}
-    />{" "}
-    カテゴリー3
-  </label>
+       <div className="form-row">
+ <label className="form-label">
+  カテゴリー<span className="required">必須</span>
+</label>
+  <div className="form-options">
+    <label>
+      <input
+        type="radio"
+        name="category"
+        value="design"
+        checked={formData.category === "design"}
+        onChange={handleChange}
+        required
+      />{" "}
+      カテゴリー1
+    </label>
+    <label>
+      <input
+        type="radio"
+        name="category"
+        value="development"
+        checked={formData.category === "development"}
+        onChange={handleChange}
+      />{" "}
+      カテゴリー2
+    </label>
+    <label>
+      <input
+        type="radio"
+        name="category"
+        value="marketing"
+        checked={formData.category === "marketing"}
+        onChange={handleChange}
+      />{" "}
+      カテゴリー3
+    </label>
+  </div>
 </div>
 
-
         {/* プラン選択（チェックボックス） */}
-        <div style={{ marginBottom: "12px" }}>
-          <label>プラン</label><br />
-          <label>
-            <input
-              type="checkbox"
-              name="plan"
-              value="basic"
-              checked={formData.plan.includes("basic")}
-              onChange={handleCheckboxChange}
-            />{" "}
-            プランa
-          </label>{" "}
-          <label>
-            <input
-              type="checkbox"
-              name="plan"
-              value="standard"
-              checked={formData.plan.includes("standard")}
-              onChange={handleCheckboxChange}
-            />{" "}
-            プランb
-          </label>{" "}
-          <label>
-            <input
-              type="checkbox"
-              name="plan"
-              value="premium"
-              checked={formData.plan.includes("premium")}
-              onChange={handleCheckboxChange}
-            />{" "}
-            プランc
-          </label>
+        <div className="form-row">
+          <label className="form-label">プラン</label>
+          <div className="form-options">
+            <label>
+              <input
+                type="checkbox"
+                name="plan"
+                value="basic"
+                checked={formData.plan.includes("basic")}
+                onChange={handleCheckboxChange}
+              />{" "}
+              プランa
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                name="plan"
+                value="standard"
+                checked={formData.plan.includes("standard")}
+                onChange={handleCheckboxChange}
+              />{" "}
+              プランb
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                name="plan"
+                value="premium"
+                checked={formData.plan.includes("premium")}
+                onChange={handleCheckboxChange}
+              />{" "}
+              プランc
+            </label>
+          </div>
         </div>
 
         {/* お問い合わせ内容 */}
-        <div style={{ marginBottom: "12px" }}>
-          <label>お問い合わせ内容</label><br />
+        <div className="form-row">
+          <label className="form-label">
+  お問い合わせ内容<span className="required">必須</span>
+</label>
           <textarea
             name="message"
             value={formData.message}
             onChange={handleChange}
             required
             rows="5"
-            style={{ width: "100%", padding: "8px" }}
+            className="form-input"
           />
         </div>
 
-        <button type="submit" style={{ padding: "10px 20px" }}>
+        <button type="submit" className="submit-button">
           送信
         </button>
       </form>
