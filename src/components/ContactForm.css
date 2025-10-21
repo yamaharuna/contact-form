@@ -104,3 +104,14 @@
   background-color: #b3b3b3;
 }
 
+.error {
+  border-color: red;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 4px;
+}
+
+

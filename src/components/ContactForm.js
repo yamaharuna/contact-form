@@ -14,11 +14,12 @@ export default function ContactForm() {
   });
 
   const [page, setPage] = useState("form");
+  const [errors, setErrors] = useState({}); // ← エラーメッセージ管理
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setErrors((prev) => ({ ...prev, [name]: "" })); // 入力時にエラーを消す
 
-    // サービスが変わったらカテゴリー・プランをリセット
     if (name === "service") {
       setFormData({
         ...formData,
@@ -41,7 +42,38 @@ export default function ContactForm() {
     }));
   };
 
-  const handleConfirm = () => setPage("confirm");
+  const validateForm = () => {
+  const newErrors = {};
+  
+  if (!formData.name.trim()) newErrors.name = "氏名は必須です。";
+  
+  if (!formData.email.trim()) {
+    newErrors.email = "メールアドレスは必須です。";
+  } else {
+    // メール形式チェック
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      newErrors.email = "正しいメールアドレスを入力してください。";
+    }
+  }
+  
+  if (!formData.service.trim()) newErrors.service = "サービスを選択してください。";
+  if (!formData.category.trim()) newErrors.category = "カテゴリーを選択してください。";
+  if (!formData.message.trim()) newErrors.message = "お問い合わせ内容を入力してください。";
+  
+  return newErrors;
+};
+
+
+  const handleConfirm = () => {
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return; // エラーがある場合は確認画面へ進まない
+    }
+    setPage("confirm");
+  };
+
   const handleBack = () => setPage("form");
   const handleSubmit = () => setPage("success");
 
@@ -49,11 +81,12 @@ export default function ContactForm() {
     setFormData({
       name: "",
       email: "",
-      service: "",
+      service: "サービスA",
       category: "",
       plan: [],
       message: "",
     });
+    setErrors({});
     setPage("form");
   };
 
@@ -94,7 +127,6 @@ export default function ContactForm() {
     ],
   };
 
-  // 現在のサービスに対応する選択肢
   const currentCategories = categoryOptions[formData.service] || [];
   const currentPlans = planOptions[formData.service] || [];
 
@@ -126,10 +158,10 @@ export default function ContactForm() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              required
               placeholder="山田太郎"
-              className="form-input"
+              className={`form-input ${errors.name ? "error" : ""}`}
             />
+            {errors.name && <p className="error-message">{errors.name}</p>}
           </div>
 
           {/* メール */}
@@ -142,10 +174,10 @@ export default function ContactForm() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              required
               placeholder="mail@example.com"
-              className="form-input"
+              className={`form-input ${errors.email ? "error" : ""}`}
             />
+            {errors.email && <p className="error-message">{errors.email}</p>}
           </div>
 
           {/* サービス */}
@@ -157,14 +189,13 @@ export default function ContactForm() {
               name="service"
               value={formData.service}
               onChange={handleChange}
-              required
-              className="form-input"
+              className={`form-input ${errors.service ? "error" : ""}`}
             >
-
               <option value="サービスA">サービスA</option>
               <option value="サービスB">サービスB</option>
               <option value="サービスC">サービスC</option>
             </select>
+            {errors.service && <p className="error-message">{errors.service}</p>}
           </div>
 
           {/* カテゴリー */}
@@ -182,12 +213,14 @@ export default function ContactForm() {
                       value={cat.value}
                       checked={formData.category === cat.value}
                       onChange={handleChange}
-                      required
                     />
                     {cat.label}
                   </label>
                 ))}
               </div>
+              {errors.category && (
+                <p className="error-message">{errors.category}</p>
+              )}
             </div>
           )}
 
@@ -221,23 +254,20 @@ export default function ContactForm() {
               name="message"
               value={formData.message}
               onChange={handleChange}
-              required
               rows="5"
               placeholder="お問い合わせ内容をご記入ください。"
-              className="form-input"
+              maxLength={100} // 文字数制限
+              className={`form-input ${errors.message ? "error" : ""}`}
             />
+           
+            {errors.message && <p className="error-message">{errors.message}</p>}
           </div>
         </form>
       </div>
 
       {/* ボタン */}
       <div className="button-container">
-        <button
-          type="button"
-          className="submit-button"
-          onClick={handleConfirm}
-          disabled={!formData.service}
-        >
+        <button type="button" className="submit-button" onClick={handleConfirm}>
           確認画面に進む
         </button>
       </div>
