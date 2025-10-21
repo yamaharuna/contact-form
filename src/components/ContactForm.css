@@ -6,6 +6,11 @@
   border-radius: 8px;
   background-color: white;
 }
+.form-wrapper {
+  max-width: 700px;
+  margin: 40px auto;
+}
+
 
 .form-row {
   display: flex;
