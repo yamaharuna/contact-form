@@ -4,7 +4,7 @@ export default function Header() {
   return (
     <header
       style={{
-        backgroundColor: "#1A9DD9", 
+        backgroundColor: " #0099ff ", 
         color: "white",
         padding: "16px 0",
         textAlign: "center",

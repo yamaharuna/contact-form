@@ -98,7 +98,7 @@ export default function ContactForm() {
               required
               className="form-input"
             >
-              <option value="">選択してください</option>
+              
               <option value="website">サービスA</option>
               <option value="app">サービスB</option>
               <option value="design">サービスC</option>

@@ -4,7 +4,7 @@
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: white;
 }
 
 .form-row {
@@ -37,7 +37,7 @@
 
 .submit-button {
   padding: 10px 80px;
-  background-color: #0099ff; /* GMO薄青 */
+  background-color: #0099ff; 
   color: #fff;
   border: none;
   border-radius: 20px;
