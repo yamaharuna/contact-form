@@ -17,20 +17,35 @@ export default function ContactForm() {
   const [errors, setErrors] = useState({}); // ← エラーメッセージ管理
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setErrors((prev) => ({ ...prev, [name]: "" })); // 入力時にエラーを消す
+  const { name, value } = e.target;
 
-    if (name === "service") {
-      setFormData({
-        ...formData,
-        service: value,
-        category: "",
-        plan: [],
-      });
+  // お問い合わせ内容の文字数チェック
+  if (name === "message") {
+    if (value.length > 100) {
+      setErrors((prev) => ({
+        ...prev,
+        message: "100文字以内で入力してください。",
+      }));
+      return; // 入力を止める
     } else {
-      setFormData({ ...formData, [name]: value });
+      setErrors((prev) => ({ ...prev, message: "" }));
     }
-  };
+  } else {
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+  }
+
+  if (name === "service") {
+    setFormData({
+      ...formData,
+      service: value,
+      category: "",
+      plan: [],
+    });
+  } else {
+    setFormData({ ...formData, [name]: value });
+  }
+};
+
 
   const handleCheckboxChange = (e) => {
     const { value, checked } = e.target;

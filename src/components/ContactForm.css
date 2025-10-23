@@ -1,11 +1,35 @@
+/* ===== 確認ページ用 ===== */
+
 .form-container {
   max-width: 700px;
   margin: 40px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: white;
+  padding: 0;                
+  background: none;          /* 背景なし */
+  border: none;              /* 枠線なし */
+  box-shadow: none;          /* 影もなし */
 }
+
+.form-container p {
+  padding: 10px 0;                  /* 行間の余白 */
+  border-bottom: 1px solid #e0e0e0; /* 各項目の区切り線 */
+  font-size: 16px;
+  color: #333;
+  display: flex;                     /* strongと値を横並び */
+  align-items: flex-start;
+}
+
+.form-container p:last-child {
+  border-bottom: none;               /* 最後の線を消す */
+}
+
+.form-container strong {
+  width: 160px;                      /* ラベル部分の固定幅 */
+  flex-shrink: 0;
+  font-weight: 600;
+  color: #222;
+  margin-right: 16px;                /* strongと値の間に余白 */
+}
+
 .form-wrapper {
   max-width: 700px;
   margin: 40px auto;

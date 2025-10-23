@@ -7,13 +7,13 @@ export default function ConfirmPage({ formData, onBack, onSubmit }) {
 
       {/* 確認内容の枠 */}
       <div className="form-container">
-        <h2>確認画面</h2>
-        <p><strong>氏名:</strong> {formData.name}</p>
-        <p><strong>メール:</strong> {formData.email}</p>
-        <p><strong>サービス:</strong> {formData.service}</p>
-        <p><strong>カテゴリー:</strong> {formData.category}</p>
-        <p><strong>プラン:</strong> {formData.plan.join(", ")}</p>
-        <p><strong>お問い合わせ内容:</strong> {formData.message}</p>
+        <p>入力内容にお間違えないかご確認ください。</p>
+        <p><strong>氏名</strong> {formData.name}</p>
+        <p><strong>メールアドレス</strong> {formData.email}</p>
+        <p><strong>サービス</strong> {formData.service}</p>
+        <p><strong>カテゴリー</strong> {formData.category}</p>
+        <p><strong>プラン</strong> {formData.plan.join(", ")}</p>
+        <p><strong>お問い合わせ内容</strong> {formData.message}</p>
       </div>
 
       {/* 枠の外にボタン2つ */}
