@@ -1,18 +1,12 @@
 import React from "react";
+import "./ContactForm.css"; // スタイルを分けると管理しやすい
 
 export default function Header() {
   return (
-    <header
-      style={{
-        backgroundColor: " #0099ff ", 
-        color: "white",
-        padding: "16px 0",
-        textAlign: "center",
-        fontSize: "1.5rem",
-        fontWeight: "bold",
-      }}
-    >
-      お問い合わせフォーム
+    <header className="header">
+      <div className="header-inner">
+        お問い合わせフォーム
+      </div>
     </header>
   );
 }
