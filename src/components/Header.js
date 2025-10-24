@@ -1,5 +1,5 @@
 import React from "react";
-import "./ContactForm.css"; // スタイルを分けると管理しやすい
+import "./ContactForm.css"; 
 
 export default function Header() {
   return (

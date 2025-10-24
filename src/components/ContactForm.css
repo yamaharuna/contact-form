@@ -4,7 +4,7 @@
   max-width: 700px;
   margin: 40px auto;
   padding: 20px;
-  border: 1px solid #ccc;  /* ← この線が枠 */
+  border: 1px solid #ccc;  /* 枠 */
   border-radius: 8px;
   background-color: white;
 }

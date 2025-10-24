@@ -16,7 +16,7 @@ export default function ConfirmPage({ formData, onBack, onSubmit }) {
         <p><strong>お問い合わせ内容</strong> {formData.message}</p>
       </div>
 
-      {/* 枠の外にボタン2つ */}
+      {/* ボタン2つ */}
       <div className="button-container">
         <button
           type="button"
