@@ -35,14 +35,14 @@ export default function ContactForm() {
   }
 
   if (name === "service") {
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       service: value,
       category: "",
       plan: [],
-    });
+    }));
   } else {
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   }
 };
 
@@ -274,7 +274,7 @@ export default function ContactForm() {
               maxLength={100} // 文字数制限
               className={`form-input ${errors.message ? "error" : ""}`}
             />
-           
+            <div className="char-count">{formData.message.length} / 100</div>
             {errors.message && <p className="error-message">{errors.message}</p>}
           </div>
         </form>

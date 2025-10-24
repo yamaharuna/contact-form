@@ -41,6 +41,7 @@
   display: flex;
   align-items: flex-start; /* 上揃え */
   margin-bottom: 16px;
+  flex-wrap: wrap; /* エラーを下段に回り込ませる */
 }
 
 .form-label {
@@ -98,6 +99,26 @@
 .button-container {
   text-align: center;
   margin-top: 20px;
+}
+.error {
+  border-color: red;
+}
+
+.error-message {
+ color: red !important;
+  font-size: 0.2em;
+  margin-top: 4px;
+  flex-basis: 100%;      /* 次の行で全幅を占有 */
+  margin-left: 200px;    /* ラベル幅と同じだけ右に寄せる */
+}
+
+/* 文字数カウントも同様に下に配置（必要な場合） */
+.char-count {
+  flex-basis: 100%;
+  margin-left: 200px;    
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: 4px;
 }
 
 /* === 確認画面用 === */
@@ -163,15 +184,7 @@
   background-color: #b3b3b3;
 }
 
-.error {
-  border-color: red;
-}
 
-.error-message {
- color: red !important;
-  font-size: 0.9em;
-  margin-top: 4px;
-}
 /* ===== ヘッダー用 ===== */
 .header {
   background-color: #0099ff;
