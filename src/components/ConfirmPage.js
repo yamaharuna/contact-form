@@ -6,7 +6,7 @@ export default function ConfirmPage({ formData, onBack, onSubmit }) {
     <div className="form-wrapper"> {/* フォーム＋ボタン全体の親 */}
 
       {/* 確認内容の枠 */}
-      <div className="form-container">
+      <div className="confirm-container">
         <p>入力内容にお間違えないかご確認ください。</p>
         <p><strong>氏名</strong> {formData.name}</p>
         <p><strong>メールアドレス</strong> {formData.email}</p>
@@ -31,7 +31,7 @@ export default function ConfirmPage({ formData, onBack, onSubmit }) {
           onClick={onSubmit}
           style={{ marginLeft: "10px" }} 
         >
-          送信
+          送信する
         </button>
       </div>
 
