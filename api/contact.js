@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -21,20 +21,13 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'bad_request' });
   }
 
-  // 必須環境変数 (管理者宛メールは送らないので ADMIN_EMAIL は不要)
-  const { SMTP_HOST, SMTP_PORT, SMTP_SECURE, SMTP_USER, SMTP_PASS, FROM_EMAIL } = process.env;
-  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS || !FROM_EMAIL) {
+  const { RESEND_API_KEY, FROM_EMAIL } = process.env;
+  if (!RESEND_API_KEY || !FROM_EMAIL) {
     return res.status(500).json({ error: 'server_not_configured' });
   }
 
-  const transporter = nodemailer.createTransport({
-    host: SMTP_HOST,
-    port: Number(SMTP_PORT),
-    secure: String(SMTP_SECURE).toLowerCase() === 'true',
-    auth: { user: SMTP_USER, pass: SMTP_PASS },
-  });
+  const resend = new Resend(RESEND_API_KEY);
 
-  // ユーザー宛メール本文 (送信内容の控え)
   const detail = [
     `氏名: ${name}`,
     `メール: ${email}`,
@@ -49,17 +42,15 @@ module.exports = async function handler(req, res) {
   const userText = `${name} 様\nお問い合わせありがとうございます。以下の内容で受け付けました。\n\n${detail}\n\n担当よりご連絡いたします。`;
 
   try {
-    await transporter.sendMail({
+    await resend.emails.send({
       from: FROM_EMAIL,
-      to: email, // 入力されたユーザー宛のみ送信
-      replyTo: FROM_EMAIL,
+      to: email,
       subject: 'お問い合わせ受付',
       text: userText,
     });
-
     return res.status(200).json({ ok: true });
   } catch (err) {
-    console.error('SMTP send error:', err);
+    console.error('Resend send error:', err);
     return res.status(500).json({ error: 'send_failed' });
   }
 };
