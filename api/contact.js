@@ -9,19 +9,17 @@ module.exports = async function handler(req, res) {
   let body = req.body;
   try {
     if (typeof body === 'string') body = JSON.parse(body || '{}');
-  } catch (e) {
+  } catch (_) {
     return res.status(400).json({ error: 'invalid_json' });
   }
 
   const { name, email, service, category, plan = [], message } = body || {};
 
-  // Validation
   const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!name || !emailRe.test(email || '') || !message || message.length > 100) {
     return res.status(400).json({ error: 'bad_request' });
   }
 
-  // 必須環境変数 
   const { SMTP_HOST, SMTP_PORT, SMTP_SECURE, SMTP_USER, SMTP_PASS, FROM_EMAIL } = process.env;
   if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS || !FROM_EMAIL) {
     return res.status(500).json({ error: 'server_not_configured' });
@@ -34,7 +32,6 @@ module.exports = async function handler(req, res) {
     auth: { user: SMTP_USER, pass: SMTP_PASS },
   });
 
-  // ユーザー宛メール本文 (送信内容の控え)
   const detail = [
     `氏名: ${name}`,
     `メール: ${email}`,
@@ -51,15 +48,13 @@ module.exports = async function handler(req, res) {
   try {
     await transporter.sendMail({
       from: FROM_EMAIL,
-      to: email, // 入力されたユーザー宛のみ送信
+      to: email,
       replyTo: FROM_EMAIL,
       subject: 'お問い合わせ受付',
       text: userText,
     });
-
     return res.status(200).json({ ok: true });
-  } catch (err) {
-    console.error('SMTP send error:', err);
+  } catch (_) {
     return res.status(500).json({ error: 'send_failed' });
   }
 };
